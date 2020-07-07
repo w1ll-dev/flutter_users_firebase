@@ -11,20 +11,26 @@ Future<List<User>> getUsers() async {
   List<User> list = [];
 
   jsonRes.forEach((key, value) {
-    list.add(User.fromJson(value));
+    list.add(User.fromJson(value, key));
   });
 
   return response.statusCode == 200 ? list : Exception("Fail");
 }
 
 Future<void> createUser(User user) async {
-  await http.post(
-    "$_baseUrl/user.json",
-    body: jsonEncode({
-      'name': user.name,
-      'email': user.email,
-      'age': user.age,
-      'avatarUrl': user.avatarUrl,
-    }),
-  );
+  http
+      .post("$_baseUrl/user.json",
+          body: jsonEncode({
+            'name': user.name,
+            'email': user.email,
+            'age': user.age,
+            'avatarUrl': user.avatarUrl,
+          }))
+      .then((value) => value.statusCode);
+}
+
+Future<void> deleteUser(String id) async {
+  http
+      .delete("$_baseUrl/user/$id.json",)
+      .then((value) => value.statusCode);
 }

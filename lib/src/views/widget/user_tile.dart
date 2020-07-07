@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_users_firebase/src/controllers/user_controller.dart';
 import 'package:flutter_users_firebase/src/models/user_model.dart';
 
 class UserTile extends StatelessWidget {
+  final UsersController _userController = UsersController();
   final User user;
   UserTile({this.user});
   @override
   Widget build(BuildContext context) {
     return ListTile(
       leading: CircleAvatar(
-        backgroundImage: NetworkImage(user.avatarUrl),
+        backgroundImage: NetworkImage(user.avatarUrl) ?? Icon(Icons.person),
       ),
       title: Text("${user.name}"),
       subtitle: Text("${user.email}"),
@@ -28,7 +30,11 @@ class UserTile extends StatelessWidget {
                 Icons.delete,
                 color: Colors.red,
               ),
-              onPressed: null,
+              onPressed: () async => {
+                _userController
+                    .delete(user.id)
+                    .then((value) => _userController.getList())
+              },
             )
           ],
         ),

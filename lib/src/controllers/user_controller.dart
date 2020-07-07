@@ -15,9 +15,17 @@ abstract class _UsersControllerBase with Store {
     final response = await getUsers();
     all = [...response];
   }
-  
 
   @action
-  int count() => all.length;
+  create({User user}) async {
+    final status = await createUser(user);
+    await getList();
+    return status;
+  }
 
+  @action
+  delete(String id) async {
+    final status = await deleteUser(id);
+    return status;
+  }
 }

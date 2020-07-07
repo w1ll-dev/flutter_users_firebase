@@ -31,18 +31,18 @@ mixin _$UsersController on _UsersControllerBase, Store {
     return _$getListAsyncAction.run(() => super.getList());
   }
 
-  final _$_UsersControllerBaseActionController =
-      ActionController(name: '_UsersControllerBase');
+  final _$createAsyncAction = AsyncAction('_UsersControllerBase.create');
 
   @override
-  int count() {
-    final _$actionInfo = _$_UsersControllerBaseActionController.startAction(
-        name: '_UsersControllerBase.count');
-    try {
-      return super.count();
-    } finally {
-      _$_UsersControllerBaseActionController.endAction(_$actionInfo);
-    }
+  Future create({User user}) {
+    return _$createAsyncAction.run(() => super.create(user: user));
+  }
+
+  final _$deleteAsyncAction = AsyncAction('_UsersControllerBase.delete');
+
+  @override
+  Future delete(String id) {
+    return _$deleteAsyncAction.run(() => super.delete(id));
   }
 
   @override
