@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_users_firebase/src/views/user_form.dart';
 import 'package:flutter_users_firebase/src/views/users_list.dart';
 
 void main() => runApp(MyApp());

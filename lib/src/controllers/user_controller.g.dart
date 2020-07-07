@@ -9,32 +9,46 @@ part of 'user_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$UsersController on _UsersControllerBase, Store {
-  final _$usersListAtom = Atom(name: '_UsersControllerBase.usersList');
+  final _$allAtom = Atom(name: '_UsersControllerBase.all');
 
   @override
-  List<User> get usersList {
-    _$usersListAtom.reportRead();
-    return super.usersList;
+  List<User> get all {
+    _$allAtom.reportRead();
+    return super.all;
   }
 
   @override
-  set usersList(List<User> value) {
-    _$usersListAtom.reportWrite(value, super.usersList, () {
-      super.usersList = value;
+  set all(List<User> value) {
+    _$allAtom.reportWrite(value, super.all, () {
+      super.all = value;
     });
   }
 
-  final _$getUsersAsyncAction = AsyncAction('_UsersControllerBase.getUsers');
+  final _$getListAsyncAction = AsyncAction('_UsersControllerBase.getList');
 
   @override
-  Future<void> getUsers() {
-    return _$getUsersAsyncAction.run(() => super.getUsers());
+  Future getList() {
+    return _$getListAsyncAction.run(() => super.getList());
+  }
+
+  final _$_UsersControllerBaseActionController =
+      ActionController(name: '_UsersControllerBase');
+
+  @override
+  int count() {
+    final _$actionInfo = _$_UsersControllerBaseActionController.startAction(
+        name: '_UsersControllerBase.count');
+    try {
+      return super.count();
+    } finally {
+      _$_UsersControllerBaseActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
   String toString() {
     return '''
-usersList: ${usersList}
+all: ${all}
     ''';
   }
 }
