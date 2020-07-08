@@ -15,6 +15,7 @@ class UserTile extends StatelessWidget {
           builder: (context) => UserForm(
             user: user,
             usersController: usersController,
+            action: 'update',
           ),
         ),
       );

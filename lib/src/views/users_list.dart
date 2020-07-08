@@ -13,6 +13,7 @@ class UsersList extends StatelessWidget {
           builder: (context) => UserForm(
             user: User(name: '', email: '', age: '', avatarUrl: ''),
             usersController: usersController,
+            action: 'create',
           ),
         ),
       );

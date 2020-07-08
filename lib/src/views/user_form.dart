@@ -6,7 +6,8 @@ import 'package:flutter_users_firebase/src/views/users_list.dart';
 
 class UserForm extends StatelessWidget {
   final User user;
-  UserForm({this.user, this.usersController});
+  final String action;
+  UserForm({this.user, this.usersController, this.action});
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
@@ -91,54 +92,50 @@ class UserForm extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                RaisedButton(
-                  onPressed: () async => {
-                    await usersController.create(
-                      user: User(
-                        name: _nameController.text,
-                        email: _emailController.text,
-                        age: _ageController.text,
-                        avatarUrl: _avatarUrlController.text,
-                      ),
-                    ),
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) => UsersList(),
-                      ),
-                    ),
-                  },
-                  child: Text("Create"),
-                  color: Colors.green[400],
-                ),
-                RaisedButton(
-                  onPressed: () async => {
-                    if (_emailKey.currentState.validate() &&
-                        _ageKey.currentState.validate())
-                      {
-                        await usersController.update(
-                          id: user.id,
-                          user: User(
-                            name: _nameController.text,
-                            email: _emailController.text,
-                            age: _ageController.text,
-                            avatarUrl: _avatarUrlController.text,
-                          ),
+            action == 'create'
+                ? RaisedButton(
+                    onPressed: () async => {
+                      await usersController.create(
+                        user: User(
+                          name: _nameController.text,
+                          email: _emailController.text,
+                          age: _ageController.text,
+                          avatarUrl: _avatarUrlController.text,
                         ),
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (context) => UsersList(),
-                          ),
+                      ),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => UsersList(),
                         ),
-                      },
-                  },
-                  child: Text("Update"),
-                  color: Colors.yellow[400],
-                ),
-              ],
-            ),
+                      ),
+                    },
+                    child: Text("Create"),
+                    color: Colors.green[400],
+                  )
+                : RaisedButton(
+                    onPressed: () async => {
+                      if (_emailKey.currentState.validate() &&
+                          _ageKey.currentState.validate())
+                        {
+                          await usersController.update(
+                            id: user.id,
+                            user: User(
+                              name: _nameController.text,
+                              email: _emailController.text,
+                              age: _ageController.text,
+                              avatarUrl: _avatarUrlController.text,
+                            ),
+                          ),
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => UsersList(),
+                            ),
+                          ),
+                        },
+                    },
+                    child: Text("Update"),
+                    color: Colors.yellow[400],
+                  ),
           ],
         ),
       ),
