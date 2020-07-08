@@ -24,6 +24,21 @@ mixin _$UsersController on _UsersControllerBase, Store {
     });
   }
 
+  final _$totalAtom = Atom(name: '_UsersControllerBase.total');
+
+  @override
+  int get total {
+    _$totalAtom.reportRead();
+    return super.total;
+  }
+
+  @override
+  set total(int value) {
+    _$totalAtom.reportWrite(value, super.total, () {
+      super.total = value;
+    });
+  }
+
   final _$getListAsyncAction = AsyncAction('_UsersControllerBase.getList');
 
   @override
@@ -45,10 +60,18 @@ mixin _$UsersController on _UsersControllerBase, Store {
     return _$deleteAsyncAction.run(() => super.delete(id));
   }
 
+  final _$updateAsyncAction = AsyncAction('_UsersControllerBase.update');
+
+  @override
+  Future update({String id, User user}) {
+    return _$updateAsyncAction.run(() => super.update(id: id, user: user));
+  }
+
   @override
   String toString() {
     return '''
-all: ${all}
+all: ${all},
+total: ${total}
     ''';
   }
 }

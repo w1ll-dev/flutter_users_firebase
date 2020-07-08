@@ -17,7 +17,7 @@ Future<List<User>> getUsers() async {
   return response.statusCode == 200 ? list : Exception("Fail");
 }
 
-Future<void> createUser(User user) async {
+Future<void> createUser({User user}) async {
   http
       .post("$_baseUrl/user.json",
           body: jsonEncode({
@@ -29,8 +29,22 @@ Future<void> createUser(User user) async {
       .then((value) => value.statusCode);
 }
 
-Future<void> deleteUser(String id) async {
+Future<void> deleteUser({String id}) async {
   http
-      .delete("$_baseUrl/user/$id.json",)
+      .delete(
+        "$_baseUrl/user/$id.json",
+      )
+      .then((value) => value.statusCode);
+}
+
+Future<void> updateUser({String id, User userUpdated}) async {
+  http
+      .patch("$_baseUrl/user/$id.json",
+          body: jsonEncode({
+            'name': userUpdated.name,
+            'email': userUpdated.email,
+            'age': userUpdated.age,
+            'avatarUrl': userUpdated.avatarUrl,
+          }))
       .then((value) => value.statusCode);
 }

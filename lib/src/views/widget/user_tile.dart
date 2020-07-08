@@ -1,11 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_users_firebase/src/controllers/user_controller.dart';
 import 'package:flutter_users_firebase/src/models/user_model.dart';
+import 'package:flutter_users_firebase/src/views/user_form.dart';
+import 'package:flutter_users_firebase/src/views/widget/alert_diolog.dart';
 
 class UserTile extends StatelessWidget {
-  final UsersController _userController = UsersController();
   final User user;
-  UserTile({this.user});
+  final UsersController usersController;
+  UserTile({this.user, this.usersController});
+
+  void goToUserForm({BuildContext context, User user}) =>
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => UserForm(
+            user: user,
+            usersController: usersController,
+          ),
+        ),
+      );
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -23,18 +35,20 @@ class UserTile extends StatelessWidget {
                 Icons.edit,
                 color: Colors.yellow,
               ),
-              onPressed: null,
+              onPressed: () => goToUserForm(context: context, user: user),
             ),
             IconButton(
               icon: Icon(
                 Icons.delete,
                 color: Colors.red,
               ),
-              onPressed: () async => {
-                _userController
-                    .delete(user.id)
-                    .then((value) => _userController.getList())
-              },
+              onPressed: () => showDialog(
+                context: context,
+                builder: (context) => AlertDelete(
+                  user: user,
+                  usersController: usersController,
+                ),
+              ),
             )
           ],
         ),

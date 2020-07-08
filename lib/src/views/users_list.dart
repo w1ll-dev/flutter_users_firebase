@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_users_firebase/src/controllers/user_controller.dart';
+import 'package:flutter_users_firebase/src/models/user_model.dart';
 import 'package:flutter_users_firebase/src/views/user_form.dart';
 import 'package:flutter_users_firebase/src/views/widget/user_tile.dart';
 
 class UsersList extends StatelessWidget {
   final UsersController usersController = UsersController();
 
-  void goToUserForm(context) => Navigator.of(context).push(
+  void goToUserForm({BuildContext context}) => Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => UserForm(),
+          builder: (context) => UserForm(
+            user: User(name: '', email: '', age: '', avatarUrl: ''),
+            usersController: usersController,
+          ),
         ),
       );
 
   @override
   Widget build(BuildContext context) {
     usersController.getList();
+    print("total ${usersController.total}");
     return Scaffold(
       appBar: AppBar(
         title: Text("Users List"),
@@ -23,10 +28,11 @@ class UsersList extends StatelessWidget {
       body: Observer(
         builder: (_) {
           return ListView.builder(
-            itemCount: usersController.all.length,
-            itemBuilder: (c, index) {
+            itemCount: usersController.total,
+            itemBuilder: (context, index) {
               return UserTile(
                 user: usersController.all[index],
+                usersController: usersController,
               );
             },
           );
@@ -38,7 +44,7 @@ class UsersList extends StatelessWidget {
           Icons.person_add,
           color: Colors.white,
         ),
-        onPressed: () => goToUserForm(context),
+        onPressed: () => goToUserForm(context: context),
       ),
     );
   }
