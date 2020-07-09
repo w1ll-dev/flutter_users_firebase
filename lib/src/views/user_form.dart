@@ -133,7 +133,7 @@ class UserForm extends StatelessWidget {
                           ),
                         },
                     },
-                    child: Text("Update"),
+                    child: Text("Update", style: TextStyle(color: Colors.black54),),
                     color: Colors.yellow[400],
                   ),
           ],
